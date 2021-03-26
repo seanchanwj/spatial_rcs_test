@@ -1,3 +1,3 @@
-Simulated data
+## Simulated data
 
 The files "Linelistx.csv" each represent a simulated line list, and "dmattmatx.Rdata" is the corresponding R object containing the time and distance matrices which can be directly put into the algorithm. The object is a list, where the first element is the distance matrix (dmat) and the second element is the temporal matrix (tmat).
