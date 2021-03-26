@@ -136,7 +136,7 @@ spatialnetrate <-
     }
     
     
-    #E defining setcion
+    #E defining section
     if (fixed == "epsilon") {
       E<-tf$nn$relu(tf$Variable(tf$constant(epsilon,shape=shape(Q),dtype=tf$float32),name='epsilon_edge'))
       E<-tf$minimum(E,0.2)
