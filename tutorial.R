@@ -20,7 +20,7 @@ reticulate::install_miniconda(path = "../AppData/Local/r-miniconda/", update = T
 
 Sys.setenv(RETICULATE_PYTHON="../AppData/Local/r-miniconda/envs/tensorflow")
 tensorflow::install_tensorflow(version = "1.14",
-                               extra_packages = "tensorflow-probability==0.7",
+                               extra_packages = c("tensorflow-probability==0.7" "scipy==1.5.0")  ,
                                conda_python_version = "3.6",
                                envname              = "tensorflow")
 conda_list()
@@ -60,3 +60,20 @@ dmat<-dmat/1000 # convert to kilometers
 dmat = dmat[-which(dd$I==1),] # imported cases cant be infectees and so remove these
 
 sd_mid<-spatialnetrate(tp=tmat, dp= dmat, fixed = "epsilon", alpha = c(0.002, 0.001), delta=c(0.01,0.001), SpatialKernel = "exponential", epsilon = 1e-20)
+
+# inspect results 
+
+# distribution of Rc
+hist(sd_mid[[1]])
+
+# delta parameter
+sd_mid[[2]]
+
+# alpha parameter 
+hist(sd_mid[[3]])
+
+#epsilon
+sd_mid[[4]]
+# AIC
+sd_mid[[5]]
+
