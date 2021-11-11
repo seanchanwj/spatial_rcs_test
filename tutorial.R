@@ -28,7 +28,7 @@ use_condaenv("tensorflow", required = TRUE)
 tfp <- reticulate::import("tensorflow_probability",convert=FALSE)
 tf_config() 
 
-# Load simulated data, 600 seed infections, true mean Rc is 0.5
+# Load simulated data
 
 res<-read.csv('res.csv')
 
