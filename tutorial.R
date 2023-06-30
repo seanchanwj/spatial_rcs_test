@@ -42,7 +42,8 @@ tfp <- reticulate::import("tensorflow_probability",convert=FALSE)
   #Install tensorflow: conda install -c anaconda tensorflow
   
   ##(Depending on versions)
-  
+  #conda config --add channels conda-forge
+  #conda config --set channel_priority strict
 
   #Edit ~/.Renviron: echo "RETICULATE_PYTHON=~/miniforge3/envs/rstudio-tf-2.8/bin/python" >> ~/.Renviron
   #Check installed packages: conda list | grep tensorflow
@@ -58,6 +59,9 @@ reticulate::use_condaenv("rstudio-tf-2.8", conda="~/miniconda3/bin/conda", requi
 
   #Run Script: 
 library(tensorflow)
+tfp <- reticulate::import("tensorflow_probability",convert=FALSE)
+tf_v1 <- reticulate::import("tensorflow.compat.v1")
+tf_v1$enable_eager_execution()
 tf_config() 
 tf_version() 
 tf$config$list_logical_devices()
@@ -67,10 +71,17 @@ tf$config$list_logical_devices()
   #Restart 
   #If numpy has issues - to install numpy: conda install -c anaconda numpy
 
+#Install tf-probability: conda install tensorflow-probability
+#Install Scripy: conda install -c anaconda scipy
+
+#To convert tf V1 scripts to tf V2. 
+#reticulate::print(tf.__version__)
 
 # Load simulated data
 
 res<-read.csv('res.csv')
+
+n_seed <- 100
 
 # make matrices and reformat for function  
 dd<-list(n=nrow(res), I= c(rep(1,length.out = n_seed), rep(0, length.out = nrow(res)-n_seed)),t=res$inf_times, d=res$inf_dist)
@@ -98,6 +109,9 @@ for (i in 1:dd$n) { # for infectees
 
 dmat<-dmat/1000 # convert to kilometers
 dmat = dmat[-which(dd$I==1),] # imported cases cant be infectees and so remove these
+
+# testconvertor
+source("function_genRC.R")
 
 sd_mid<-spatialnetrate(tp=tmat, dp= dmat, fixed = "epsilon", alpha = c(0.002, 0.001), delta=c(0.01,0.001), SpatialKernel = "exponential", epsilon = 1e-20)
 

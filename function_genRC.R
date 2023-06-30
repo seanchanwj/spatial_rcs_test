@@ -33,6 +33,8 @@ spatialnetrate <-
     library(tensorflow)
     library(reticulate)
     tfp <- reticulate::import("tensorflow_probability",convert=FALSE)
+    tf <- tf$compat$v1
+    tf$disable_eager_execution()
     
     ###############################
     #key small functions to define
